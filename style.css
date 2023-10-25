@@ -1,0 +1,24 @@
+#grid-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-box {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
+
+#grid-wrapper {
+  /* background-color: #32302f; */
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
