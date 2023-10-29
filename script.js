@@ -1,9 +1,10 @@
-const gridWrapper = document.getElementById('grid-wrapper');
 const cleanButton = document.getElementById('clean-button');
-const grid = document.createElement('div');
+const grid = document.getElementById('grid-container');
+let slider = document.getElementById("myRange");
+let sliderField = document.getElementById('slider-field');
+sliderField.textContent = `${slider.value} x ${slider.value}`
 
-const squares = [];
-grid.id = 'grid-container';
+grid.className = 'grid-container';
 
 let isMouseDown = false;
 
@@ -15,7 +16,7 @@ function handleMouseEvents(e) {
     isMouseDown = false;
   }
   if (e.type === 'mousemove' && isMouseDown) {
-    e.target.style.backgroundColor = 'pink';
+    e.target.style.backgroundColor = '#212529';
   }
 }
 
@@ -23,38 +24,27 @@ let boxWidth;  // Moved boxWidth to global scope to make it available in makeBox
 
 function makeBox() {
   let box = document.createElement('div');  // Added let before box
-  box.style.height = `${boxWidth}px`;
-  box.style.width = `${boxWidth}px`;
-  box.style.border = `1px solid black`;
+  box.className = 'grid-box';
   box.addEventListener('mousedown', handleMouseEvents);
   box.addEventListener('mouseup', handleMouseEvents);
   box.addEventListener('mousemove', handleMouseEvents);
-  squares.push(box);
   return box;
 }
 
-function makeGrid() {
-  const gridSize = 16;
-  boxWidth = 20;  // Moved boxWidth assignment here
-  const margin = 20;
+function makeGrid(gridSize) {
 
   for (let row = 0; row < gridSize; row++) {
     let rowDiv = document.createElement('div');
     rowDiv.className = 'grid-row';
     for (let col = 0; col < gridSize; col++) {
-      let box = makeBox();  // Added let before box
+      let box = makeBox();
       rowDiv.appendChild(box);
     }
     grid.appendChild(rowDiv);
   }
-
-  gridWrapper.style.width = `${gridSize * (boxWidth + 1) + margin}px`;
-  gridWrapper.style.height = `${gridSize * (boxWidth + 1) + margin}px`;
-
-  gridWrapper.appendChild(grid);
 }
 
-makeGrid();
+makeGrid(16);
 
 // Added a listener on the document to set isMouseDown to false
 document.addEventListener('mouseup', () => {
@@ -62,7 +52,18 @@ document.addEventListener('mouseup', () => {
 });
 
 cleanButton.addEventListener('click', () => {
+  let squares = grid.querySelectorAll('.grid-box');
   squares.forEach((element) => {
     element.style.backgroundColor = 'transparent';
   });
 });
+
+slider.oninput = function() {
+  let gridElements = grid.querySelectorAll('*');
+  gridElements.forEach((element) => {
+    element.remove();
+  })
+  makeGrid(this.value);
+  sliderField.textContent = `${slider.value} x ${slider.value}`
+
+}

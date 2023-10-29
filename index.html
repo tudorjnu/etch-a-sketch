@@ -7,11 +7,17 @@
     <link href="style.css" rel="stylesheet">
   </head>
   <body>
+    <h1 id='title'>Etch-a-sketch</h1>
     <div class="main-wrapper">
       <div class="controls-wrapper">
-        <button id='clean-button'>Clean</button>
+        <button class="btn" id='clean-button'>Clean</button>
+        <div class="slidecontainer">
+          <p id='slider-field'>16 x 16</p>
+          <input type="range" min="16" max="30" value="1" class="slider" id="myRange">
+        </div>
       </div>
-      <div id="grid-wrapper">
+      <div class="grid-container" id="grid-wrapper">
+        <div id="grid-container"></div>
         <script src="script.js"></script>
       </div>
     </div>

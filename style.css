@@ -1,42 +1,145 @@
+:root {
+  /* Color Palette */
+  --background: white;
+  --text-color: black;
+  --seasalt: #f8f9faff;
+  --antiflash-white: #e9ecefff;
+  --platinum: #dee2e6ff;
+  --french-gray: #ced4daff;
+  --french-gray-2: #adb5bdff;
+  --slate-gray: #6c757dff;
+  --outer-space: #495057ff;
+  --onyx: #343a40ff;
+  --eerie-black: #212529ff;
+
+  /* Font sizes */
+  --font-size-title: 40px;
+  --font-size-button: 16px;
+
+  /* Font Weights */
+  --font-weight-title: 800;
+  --font-weight-button: 600;
+}
+
+body {
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+#title{
+  font-size: var(--font-size-title);
+  font-weight: var(--font-weight-title);
+  text-align: center;
+}
+
 .main-wrapper {
   max-width:800px;
-  min-width:300;
+  min-width:300px;
   flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-.controls-wrapper {
-  display: flex;
-  justify-content: column;
-  background-color: grey;
+  align-items: stretch;
+  padding: 16px;
+  margin: 16px;
+  gap: 60px;
 }
 
-#grid-container {
+/* Control panel */
+.controls-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+/* Grid */
+.grid-container {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 800px;
+  min-height: 300px;
+  max-height: 800px;
+  aspect-ratio: 1/1;
+  align-items: stretch;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: var(--seasalt);
 }
 
 .grid-row {
   display: flex;
-  /* This will make each row take equal width and height */
-  flex: 1;
-}
-
-#grid-wrapper {
-  /* ... */
-  /* Add width and height, if not defined elsewhere */
-  width: 100%;
-  height: 100%;
+  flex: 1 1 auto;
+  align-content: stretch;
+  align-items: stretch;
 }
 
 .grid-box {
-  /* This will make each box take equal width and height within its row */
-  flex: 1;
-  /* box-sizing is set to border-box so padding and border are included in dimensions */
+  display: flex;
+  flex: 1 1 auto;
   box-sizing: border-box;
 }
 
+/* Sliders */
+.slidecontainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: var(--platinum);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: var(--onyx);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  width: 80px;
+  height: 40px;
+  border-radius: 10%;
+  font-size: var(--font-size-button);
+  font-weight: var(--font-weight-button);
+  cursor: pointer;
+  border-color: var(--antiflash-white);
+  color: black;
+}
+
+
+.btn:hover {
+  background: var(--antiflash-white);
+}
