@@ -1,69 +1,65 @@
 const cleanButton = document.getElementById('clean-button');
 const grid = document.getElementById('grid-container');
-let slider = document.getElementById("myRange");
-let sliderField = document.getElementById('slider-field');
-sliderField.textContent = `${slider.value} x ${slider.value}`
-
-grid.className = 'grid-container';
+const slider = document.getElementById("grid-size");
+const sliderField = document.getElementById('slider-field');
 
 let isMouseDown = false;
 
-function handleMouseEvents(e) {
-  if (e.type === 'mousedown') {
-    isMouseDown = true;
-  }
-  if (e.type === 'mouseup') {
-    isMouseDown = false;
-  }
+const updateSliderField = value => {
+  sliderField.textContent = `${value} x ${value}`;
+};
+
+// Initial setup
+grid.className = 'grid-container';
+updateSliderField(slider.value);
+
+const handleMouseEvents = e => {
+  if (e.type === 'mousedown') isMouseDown = true;
+  if (e.type === 'mouseup') isMouseDown = false;
   if (e.type === 'mousemove' && isMouseDown) {
     e.target.style.backgroundColor = '#212529';
   }
-}
+};
 
-let boxWidth;  // Moved boxWidth to global scope to make it available in makeBox
+const addMouseEvents = box => {
+  ['mousedown', 'mouseup', 'mousemove'].forEach(event => {
+    box.addEventListener(event, handleMouseEvents);
+  });
+};
 
-function makeBox() {
-  let box = document.createElement('div');  // Added let before box
+const makeBox = () => {
+  const box = document.createElement('div');
   box.className = 'grid-box';
-  box.addEventListener('mousedown', handleMouseEvents);
-  box.addEventListener('mouseup', handleMouseEvents);
-  box.addEventListener('mousemove', handleMouseEvents);
+  addMouseEvents(box);
   return box;
-}
+};
 
-function makeGrid(gridSize) {
-
+const makeGrid = gridSize => {
   for (let row = 0; row < gridSize; row++) {
-    let rowDiv = document.createElement('div');
+    const rowDiv = document.createElement('div');
     rowDiv.className = 'grid-row';
     for (let col = 0; col < gridSize; col++) {
-      let box = makeBox();
-      rowDiv.appendChild(box);
+      rowDiv.appendChild(makeBox());
     }
     grid.appendChild(rowDiv);
   }
-}
+};
 
-makeGrid(16);
+const clearGrid = () => {
+  const squares = grid.querySelectorAll('.grid-box');
+  squares.forEach(element => element.style.backgroundColor = 'transparent');
+};
 
-// Added a listener on the document to set isMouseDown to false
-document.addEventListener('mouseup', () => {
-  isMouseDown = false;
-});
+document.addEventListener('mouseup', () => isMouseDown = false);
 
-cleanButton.addEventListener('click', () => {
-  let squares = grid.querySelectorAll('.grid-box');
-  squares.forEach((element) => {
-    element.style.backgroundColor = 'transparent';
-  });
-});
+cleanButton.addEventListener('click', clearGrid);
 
 slider.oninput = function() {
-  let gridElements = grid.querySelectorAll('*');
-  gridElements.forEach((element) => {
-    element.remove();
-  })
+  const gridElements = grid.querySelectorAll('*');
+  gridElements.forEach(element => element.remove());
   makeGrid(this.value);
-  sliderField.textContent = `${slider.value} x ${slider.value}`
+  updateSliderField(this.value);
+};
 
-}
+// Initial grid
+makeGrid(16);
